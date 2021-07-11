@@ -8,7 +8,7 @@ from trendyol_sdk.services import ProductIntegrationService, \
 from trendyol_sdk.utils import json_encode
 from trendyol_sdk.exceptions import TrendyolAPIError
 
-class TrendyolApi:
+class TrendyolApiClient:
 
     def __init__(self, api_key, api_secret, supplier_id, integrator_name="SelfIntegration", is_test=False):
         self.api_key = api_key
