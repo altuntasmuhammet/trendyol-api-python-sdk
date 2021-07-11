@@ -13,8 +13,8 @@ with open(requirements_filename) as f:
     PACKAGE_INSTALL_REQUIRES = [line[:-1] for line in f]
 
 setup(
-    name = "trendyol_api_python_sdk",
-    version = "0.0.1",
+    name = "trendyol_api",
+    version = "0.0.2",
     author = "Muhammed Ali Altuntas",
     author_email = "altuntasmuhammet96@gmail.com",
     description = ("Unofficial Trendyol API Python SDK"),
