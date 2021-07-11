@@ -14,3 +14,12 @@ from trendyol_sdk.services import ProductIntegrationService
 api = TrendyolApi(api_key="<TRENDYOL_API_KEY>", api_secret="<TRENDYOL_API_SECRET>", supplier_id="<TRENDYOL_SELLER_ID>")
 service = ProductIntegrationService(api)
 products = service.get_products()
+```
+
+## Services Completion Status
+- [x] Product Integration (Urun Entegrasyonu)
+- [ ] Order Integration (Siparis Entegrasyonu)
+- [ ] Common Label Integration (Ortak Etiken Entegrasyonu)
+- [ ] Returned Orders Integration (Iade Entegrasyonu)
+- [ ] Accounting And Finance Integration (Muhasebe ve Finans Entegrasyonu)
+- [ ] Question And Answer Integration (Soru Cevap Entegrasyonu)
