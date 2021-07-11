@@ -18,7 +18,7 @@ products = service.get_products()
 
 ## Services Completion Status
 - [x] Product Integration (Urun Entegrasyonu)
-- [ ] Order Integration (Siparis Entegrasyonu)
+- [x] Order Integration (Siparis Entegrasyonu)
 - [ ] Common Label Integration (Ortak Etiken Entegrasyonu)
 - [ ] Returned Orders Integration (Iade Entegrasyonu)
 - [ ] Accounting And Finance Integration (Muhasebe ve Finans Entegrasyonu)
