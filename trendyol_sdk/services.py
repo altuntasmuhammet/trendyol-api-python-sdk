@@ -73,13 +73,13 @@ class ProductIntegrationService(BaseService):
         if not filter_params:
             filter_params = {}
         params = {
-            "approved": filter_params.get("approved", ""),
-            "barcode": filter_params.get("barcode", ""),
-            "startDate": filter_params.get("startDate", ""),
-            "endDate": filter_params.get("endDate", ""),
-            "page": filter_params.get("page", ""),
-            "dateQueryType": filter_params.get("dateQueryType", ""),
-            "size": filter_params.get("size", "")
+            "approved": filter_params.get("approved", None),
+            "barcode": filter_params.get("barcode", None),
+            "startDate": filter_params.get("startDate", None),
+            "endDate": filter_params.get("endDate", None),
+            "page": filter_params.get("page", None),
+            "dateQueryType": filter_params.get("dateQueryType", None),
+            "size": filter_params.get("size", None)
         }
         url = urljoin(self.base_url, endpoint)
         data = self._api.call("GET", url, params=params, headers=None, files=None)
@@ -126,11 +126,11 @@ class ProductIntegrationService(BaseService):
 
     def update_price_and_stock(self, items, supplier_id=None):
         if supplier_id:
-            endpoint = "suppliers/{supplier_id}/products/products/price-and-inventory".format(
+            endpoint = "suppliers/{supplier_id}/products/price-and-inventory".format(
                 supplier_id=supplier_id
             )
         else:
-            endpoint = "suppliers/{supplier_id}/products/products/price-and-inventory".format(
+            endpoint = "suppliers/{supplier_id}/products/price-and-inventory".format(
                 supplier_id=self._api.supplier_id
             )
         url = urljoin(self.base_url, endpoint)
