@@ -29,7 +29,8 @@ class TrendyolApiClient:
         # set headers
         user_agent = "{} - {}".format(self.supplier_id, self.integrator_name)
         headers.update({
-            "User-Agent": user_agent
+            "User-Agent": user_agent,
+            "Content-Type": "application/json;charset=utf-8",
         })
         # Encode params
         params = json_encode(params)
