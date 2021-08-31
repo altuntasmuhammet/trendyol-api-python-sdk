@@ -130,7 +130,7 @@ class ProductIntegrationService(BaseService):
                 supplier_id=supplier_id
             )
         else:
-            endpoint = "suppliers/{supplier_id}/products/batch-requests/{batch_request_id}".format(
+            endpoint = "suppliers/{supplier_id}/products/products/price-and-inventory".format(
                 supplier_id=self._api.supplier_id
             )
         url = urljoin(self.base_url, endpoint)
