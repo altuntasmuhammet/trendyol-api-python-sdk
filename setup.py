@@ -14,7 +14,7 @@ with open(requirements_filename) as f:
 
 setup(
     name = "trendyol_api_python_sdk",
-    version = "0.0.3",
+    version = "0.0.4",
     author = "Muhammed Ali Altuntas",
     author_email = "altuntasmuhammet96@gmail.com",
     description = ("Unofficial Trendyol API Python Client"),
