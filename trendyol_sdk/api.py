@@ -32,8 +32,6 @@ class TrendyolApiClient:
             "User-Agent": user_agent,
             "Content-Type": "application/json;charset=utf-8",
         })
-        # Encode params
-        params = json_encode(params)
         # call request
         if method in ('GET', 'DELETE'):
             response = self._session.requests.request(
@@ -46,6 +44,8 @@ class TrendyolApiClient:
             )
 
         else:
+            # Encode params
+            params = json_encode(params)
             response = self._session.requests.request(
                 method,
                 url,

@@ -137,7 +137,7 @@ class ProductIntegrationService(BaseService):
         params = {
             "items": items
         }
-        data = self._api.call("PUT", url, params=params, headers=None, files=None)
+        data = self._api.call("POST", url, params=params, headers=None, files=None)
         return data
         
 
