@@ -1,10 +1,4 @@
 import requests
-from trendyol_sdk.services import ProductIntegrationService, \
-    OrderIntegrationService, \
-    CommonLabelIntegrationService, \
-    ReturnedOrdersIntegrationService, \
-    AccountingAndFinanceIntegrationService, \
-    QuestionAndAnswerIntegrationService
 from trendyol_sdk.utils import json_encode
 from trendyol_sdk.exceptions import TrendyolAPIError
 

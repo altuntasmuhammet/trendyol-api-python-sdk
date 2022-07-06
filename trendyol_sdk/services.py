@@ -1,9 +1,9 @@
 from urllib.parse import urljoin
-
+from trendyol_sdk import api
 
 class BaseService:
 
-    def __init__(self, api):
+    def __init__(self, api: 'api.TrendyolApiClient'):
         self._api = api
         if self._api.is_test:
             self.base_url = "https://stageapi.trendyol.com/stagesapigw/"
@@ -13,7 +13,7 @@ class BaseService:
 
 class ProductIntegrationService(BaseService):
 
-    def __init__(self, api):
+    def __init__(self, api: 'api.TrendyolApiClient'):
         super(ProductIntegrationService, self).__init__(api)
 
     def get_suppliers_addresses(self, supplier_id=None):
@@ -146,22 +146,75 @@ class OrderIntegrationService(BaseService):
     def __init__(self, api):
         super(OrderIntegrationService, self).__init__(api)
 
-    def get_shipment_packages(self):
-        pass
+    def get_shipment_packages(self, filter_params, supplier_id=None):
+        if supplier_id:
+            endpoint = "suppliers/{}/orders".format(supplier_id)
+        else:
+            endpoint = "suppliers/{}/orders".format(self._api.supplier_id)
+        if not filter_params:
+            filter_params = {}
+        params = {
+            "startDate": filter_params.get("startDate", None),
+            "endDate": filter_params.get("endDate", None),
+            "page": filter_params.get("page", None),
+            "size": filter_params.get("size", None),
+            "orderNumber": filter_params.get("orderNumber", None),
+            "status": filter_params.get("status", None),
+            "orderByField": filter_params.get("orderByField", None),
+            "orderByDirection": filter_params.get("orderByDirection", None),
+            "shipmentPackageIds": filter_params.get("shipmentPackageIds", None)
+        }
+        url = urljoin(self.base_url, endpoint)
+        data = self._api.call("GET", url, params=params, headers=None, files=None)
+        return data
 
     def get_awaiting_shipment_packages(self):
         pass
 
-    def update_tracking_number(self):
-        pass
+    def update_tracking_number(self, shipment_package_id, tracking_number, supplier_id=None):
+        if supplier_id:
+            endpoint = "suppliers/{supplier_id}/{shipment_package_id}/update-tracking-number".format(
+                supplier_id=supplier_id,
+                shipment_package_id=shipment_package_id
+            )
+        else:
+            endpoint = "suppliers/{supplier_id}/{shipment_package_id}/update-tracking-number".format(
+                supplier_id=self._api.supplier_id,
+                shipment_package_id=shipment_package_id
+            )
+        url = urljoin(self.base_url, endpoint)
+        params = {
+            "trackingNumber": tracking_number
+        }
+        data = self._api.call("PUT", url, params=params, headers=None, files=None)
+        return data
 
-    def update_shipment_package(self):
-        pass
+    def update_shipment_package(self, shipment_package_id, status, lines=None, params=None, supplier_id=None):
+        if supplier_id:
+            endpoint = "suppliers/{supplier_id}/shipment-packages/{shipment_package_id}".format(
+                supplier_id=supplier_id,
+                shipment_package_id=shipment_package_id
+            )
+        else:
+            endpoint = "suppliers/{supplier_id}/shipment-packages/{shipment_package_id}".format(
+                supplier_id=self._api.supplier_id,
+                shipment_package_id=shipment_package_id
+            )
+        url = urljoin(self.base_url, endpoint)
+        params = {
+            "status": status
+        }
+        if lines:
+            params["lines"] = lines
+        if params:
+            params["params"] = params
+        data = self._api.call("PUT", url, params=params, headers=None, files=None)
+        return data
 
     def update_package_as_unsupplied(self):
         pass
 
-    def sent_invoice_link(self):
+    def send_invoice_link(self):
         pass
 
     def split_multi_package_by_quantity(self):
