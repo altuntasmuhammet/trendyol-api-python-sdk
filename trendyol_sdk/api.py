@@ -59,7 +59,7 @@ class TrendyolSession:
     def __init__(self, api_key, api_secret, timeout=None, http_adapter=None):
         self.api_key = api_key,
         self.api_secret = api_secret
-        self.timeout=None
+        self.timeout=timeout
         self.http_adapter = http_adapter
         self.requests = requests.Session()
         self.requests.auth = (api_key, api_secret)
