@@ -284,7 +284,7 @@ class ReturnedOrdersIntegrationService(BaseService):
                 supplier_id=self._api.supplier_id,
                 shipment_package_id=shipment_package_id
             )
-         url = urljoin(self.oms_url, endpoint)
+        url = urljoin(self.oms_url, endpoint)
         data = self._api.call("GET", url, params=params, headers=None, files=None)
         return data
 
