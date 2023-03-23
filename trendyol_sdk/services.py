@@ -270,8 +270,19 @@ class ReturnedOrdersIntegrationService(BaseService):
     def approve_claim_line_items(self):
         pass
 
-    def create_claim_issue(self):
-        pass
+    def create_claim_issue(self, claim_id, claim_item_id_list, claim_issue_reason_id, description, attachments):
+        endpoint = "/claims/{claim_id}/issue".format(claim_id=claim_id)
+        url = urljoin(self.base_url, endpoint)
+        headers = {'Content-Type': 'multipart/form-data'}
+        params = {
+            'claimIssueReasonId': claim_issue_reason_id,
+            'claimItemIdList': claim_item_id_list,
+            'description': description
+        }
+        files = [('files', open(file, 'rb')) for file in attachments]
+        data = self._api.call("POST", url, params=params, headers=headers, files=files)
+        return data
+
 
     def get_claim_issue_reasons(self):
         endpoint = "/claim-issue-reasons"
