@@ -274,7 +274,10 @@ class ReturnedOrdersIntegrationService(BaseService):
         pass
 
     def get_claim_issue_reasons(self):
-        pass
+        endpoint = "/claim-issue-reasons"
+        url = urljoin(self.oms_url, endpoint)
+        data = self._api.call("GET", url, params=params, headers=None, files=None)
+        return data
 
     def get_claim_audits(self):
         endpoint = "/sellers/{self.seller_id}/claims/items/{self.claim_items_id}/audit".format(
