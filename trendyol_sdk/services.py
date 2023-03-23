@@ -206,7 +206,7 @@ class OrderIntegrationService(BaseService):
         }
         if lines:
             params["lines"] = lines
-        if params:
+        if params is not None and "params" not in params:
             params["params"] = params
         data = self._api.call("PUT", url, params=params, headers=None, files=None)
         return data
