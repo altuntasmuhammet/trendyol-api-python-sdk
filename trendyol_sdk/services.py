@@ -267,8 +267,21 @@ class ReturnedOrdersIntegrationService(BaseService):
     def create_claim(self):
         pass
 
-    def approve_claim_line_items(self):
-        pass
+    def approve_claim_line_items(self, claimId, claimLineItemIdList):
+        endpoint = "/claims/{claimId}/items/approve".format(claim_id=claim_id)
+        url = urljoin(self.base_url, endpoint)
+        params = {
+          "claimLineItemIdList": [
+          ],
+        }
+        if type(claimLineItemIdList) == list:
+            for item in claimLineItemIdList:
+                params['claimLineItemIdList'].append(item)
+        else:
+            params['claimLineItemIdList'] = claimLineItemIdList
+        data = self._api.call("PUT", url, params=params, headers=headers, files=files)
+        return data
+        
 
     def create_claim_issue(self, claim_id, claim_item_id_list, claim_issue_reason_id, description, attachments):
         endpoint = "/claims/{claim_id}/issue".format(claim_id=claim_id)
