@@ -277,7 +277,13 @@ class ReturnedOrdersIntegrationService(BaseService):
         pass
 
     def get_claim_audits(self):
-        pass
+        endpoint = "/sellers/{self.seller_id}/claims/items/{self.claim_items_id}/audit".format(
+                supplier_id=self._api.supplier_id,
+                shipment_package_id=shipment_package_id
+            )
+         url = urljoin(self.oms_url, endpoint)
+        data = self._api.call("GET", url, params=params, headers=None, files=None)
+        return data
 
 
 class AccountingAndFinanceIntegrationService(BaseService):
