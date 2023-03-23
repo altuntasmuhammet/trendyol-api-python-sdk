@@ -211,8 +211,23 @@ class OrderIntegrationService(BaseService):
         data = self._api.call("PUT", url, params=params, headers=None, files=None)
         return data
 
-    def update_package_as_unsupplied(self):
-        pass
+    def update_package_as_unsupplied(self, shipment_package_id, reason_id, supplier_id=None):
+        if supplier_id:
+            endpoint = "suppliers/{supplier_id}/shipment-packages/{shipment_package_id}/items/unsupplied".format(
+                supplier_id=supplier_id,
+                shipment_package_id=shipment_package_id
+            )
+        else:
+            endpoint = "suppliers/{supplier_id}/shipment-packages/{shipment_package_id}/items/unsupplied".format(
+                supplier_id=self._api.supplier_id,
+                shipment_package_id=shipment_package_id
+            )
+        url = urljoin(self.base_url, endpoint)
+        params = {
+            "reasonId": reason_id
+        }
+        self._api.call("PUT", url, params=params, headers=None, files=None)
+
 
     def send_invoice_link(self):
         pass
