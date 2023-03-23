@@ -286,7 +286,7 @@ class ReturnedOrdersIntegrationService(BaseService):
 
     def get_claim_issue_reasons(self):
         endpoint = "/claim-issue-reasons"
-        url = urljoin(self.oms_url, endpoint)
+        url = urljoin(self.base_url, endpoint)
         data = self._api.call("GET", url, params=params, headers=None, files=None)
         return data
 
