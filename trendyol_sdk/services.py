@@ -189,7 +189,7 @@ class OrderIntegrationService(BaseService):
         data = self._api.call("PUT", url, params=params, headers=None, files=None)
         return data
 
-    def update_shipment_package(self, shipment_package_id, status, lines=None, params=None, supplier_id=None):
+    def update_shipment_package(self, shipment_package_id, status, supplier_id=None):
         if supplier_id:
             endpoint = "suppliers/{supplier_id}/shipment-packages/{shipment_package_id}".format(
                 supplier_id=supplier_id,
@@ -204,10 +204,6 @@ class OrderIntegrationService(BaseService):
         params = {
             "status": status
         }
-        if lines:
-            params["lines"] = lines
-        if params:
-            params["params"] = params
         data = self._api.call("PUT", url, params=params, headers=None, files=None)
         return data
 
