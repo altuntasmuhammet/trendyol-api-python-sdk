@@ -298,11 +298,26 @@ class QuestionAndAnswerIntegrationService(BaseService):
     def __init__(self, api):
         super(QuestionAndAnswerIntegrationService, self).__init__(api)
 
-    def get_question_filters(self):
-        pass
-
-    def get_question_filter_by_id(self):
-        pass
-
-    def create_answer(self):
-        pass
+    def get_customer_questions(self, start_date=None, end_date=None, status='WAITING_FOR_ANSWER', page=0, size=10, orderby='orderByField', order='CreatedDate'):
+        endpoint = f'{self.base_url}{self.supplier_id}/questions/filter'
+        params = {
+            'startDate': start_date,
+            'endDate': end_date,
+            'status': status,
+            'page': page,
+            'size': size,
+            orderby: order,
+        }
+        data = self._api.call("PUT", url, params=params, headers=None, files=None)
+        return data
+    
+    def get_customer_question_by_id(self, question_id):
+        endpoint = f'{self.base_url}{self.supplier_id}/questions/{question_id}'
+        data = self._api.call("PUT", url, params=None, headers=None, files=None)
+        return data
+    
+    def answer_customer_question(self, question_id, answer_text):
+        endpoint = f'{self.base_url}{self.supplier_id}/questions/{question_id}/answers'
+        params = {'text': answer_text}
+        data = self._api.call("POST", url, params=params, headers=None, files=None)
+        return data
