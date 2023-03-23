@@ -7,8 +7,10 @@ class BaseService:
         self._api = api
         if self._api.is_test:
             self.base_url = "https://stageapi.trendyol.com/stagesapigw/"
+            self.oms_url = "https://api.trendyol.com/integration/oms/core/"
         else:
             self.base_url = "https://api.trendyol.com/sapigw/"
+            self.oms_url = "https://stageapi.trendyol.com/integration/oms/core/"
 
 
 class ProductIntegrationService(BaseService):
