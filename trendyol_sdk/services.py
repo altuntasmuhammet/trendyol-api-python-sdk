@@ -7,8 +7,10 @@ class BaseService:
         self._api = api
         if self._api.is_test:
             self.base_url = "https://stageapi.trendyol.com/stagesapigw/"
+            self.oms_url = "https://api.trendyol.com/integration/oms/core/"
         else:
             self.base_url = "https://api.trendyol.com/sapigw/"
+            self.oms_url = "https://stageapi.trendyol.com/integration/oms/core/"
 
 
 class ProductIntegrationService(BaseService):
@@ -265,17 +267,50 @@ class ReturnedOrdersIntegrationService(BaseService):
     def create_claim(self):
         pass
 
-    def approve_claim_line_items(self):
-        pass
+    def approve_claim_line_items(self, claimId, claimLineItemIdList):
+        endpoint = "/claims/{claimId}/items/approve".format(claim_id=claim_id)
+        url = urljoin(self.base_url, endpoint)
+        params = {
+          "claimLineItemIdList": [
+          ],
+        }
+        if type(claimLineItemIdList) == list:
+            for item in claimLineItemIdList:
+                params['claimLineItemIdList'].append(item)
+        else:
+            params['claimLineItemIdList'] = claimLineItemIdList
+        data = self._api.call("PUT", url, params=params, headers=headers, files=files)
+        return data
+        
 
-    def create_claim_issue(self):
-        pass
+    def create_claim_issue(self, claim_id, claim_item_id_list, claim_issue_reason_id, description, attachments):
+        endpoint = "/claims/{claim_id}/issue".format(claim_id=claim_id)
+        url = urljoin(self.base_url, endpoint)
+        headers = {'Content-Type': 'multipart/form-data'}
+        params = {
+            'claimIssueReasonId': claim_issue_reason_id,
+            'claimItemIdList': claim_item_id_list,
+            'description': description
+        }
+        files = [('files', open(file, 'rb')) for file in attachments]
+        data = self._api.call("POST", url, params=params, headers=headers, files=files)
+        return data
+
 
     def get_claim_issue_reasons(self):
-        pass
+        endpoint = "/claim-issue-reasons"
+        url = urljoin(self.base_url, endpoint)
+        data = self._api.call("GET", url, params=params, headers=None, files=None)
+        return data
 
     def get_claim_audits(self):
-        pass
+        endpoint = "/sellers/{self.seller_id}/claims/items/{self.claim_items_id}/audit".format(
+                supplier_id=self._api.supplier_id,
+                shipment_package_id=shipment_package_id
+            )
+        url = urljoin(self.oms_url, endpoint)
+        data = self._api.call("GET", url, params=params, headers=None, files=None)
+        return data
 
 
 class AccountingAndFinanceIntegrationService(BaseService):
