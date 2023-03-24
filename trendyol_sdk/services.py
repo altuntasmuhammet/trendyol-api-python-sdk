@@ -229,8 +229,15 @@ class OrderIntegrationService(BaseService):
         self._api.call("PUT", url, params=params, headers=None, files=None)
 
 
-    def send_invoice_link(self, invoice_link, shipment_package_id):
-        endpoint = "suppliers/{supplier_id}/supplier-invoice-links".format(supplier_id=self._api.supplier_id)
+    def send_invoice_link(self, invoice_link, shipment_package_id, supplier_id=None):
+        if supplier_id:
+            endpoint = "suppliers/{supplier_id}/supplier-invoice-links".format(
+                supplier_id=supplier_id
+            )
+        else:
+            endpoint = "suppliers/{supplier_id}/supplier-invoice-links".format(
+                supplier_id=self._api.supplier_id
+                )
         url = urljoin(self.base_url, endpoint)
         params = {
             "invoiceLink": invoice_link,
