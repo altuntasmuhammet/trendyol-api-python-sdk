@@ -146,7 +146,7 @@ class OrderIntegrationService(BaseService):
     def __init__(self, api):
         super(OrderIntegrationService, self).__init__(api)
 
-    def get_shipment_packages(self, filter_params, supplier_id=None):
+    def get_shipment_packages(self, filter_params=None, supplier_id=None):
         if supplier_id:
             endpoint = "suppliers/{}/orders".format(supplier_id)
         else:
